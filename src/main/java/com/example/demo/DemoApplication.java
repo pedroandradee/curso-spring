@@ -13,6 +13,7 @@ import com.example.demo.domain.Category;
 import com.example.demo.domain.City;
 import com.example.demo.domain.Client;
 import com.example.demo.domain.Order;
+import com.example.demo.domain.OrderItem;
 import com.example.demo.domain.Payment;
 import com.example.demo.domain.PaymentWithCreditCard;
 import com.example.demo.domain.PaymentWithTicket;
@@ -26,6 +27,7 @@ import com.example.demo.repositories.AddressRepository;
 import com.example.demo.repositories.CategoryRepository;
 import com.example.demo.repositories.CityRepository;
 import com.example.demo.repositories.ClientRepository;
+import com.example.demo.repositories.OrderItemRepository;
 import com.example.demo.repositories.OrderRepository;
 import com.example.demo.repositories.PaymentRepository;
 import com.example.demo.repositories.ProductRepository;
@@ -50,6 +52,8 @@ public class DemoApplication implements CommandLineRunner {
 	private OrderRepository orderRepository;
 	@Autowired
 	private PaymentRepository paymentRepository;
+	@Autowired
+	private OrderItemRepository orderItemRepository; 
 
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);
@@ -115,6 +119,19 @@ public class DemoApplication implements CommandLineRunner {
 
 		orderRepository.saveAll(Arrays.asList(o1, o2));
 		paymentRepository.saveAll(Arrays.asList(pa1, pa2));
+
+		OrderItem i1 = new OrderItem(o1, p1, 0.00, 1, 2000.00);
+		OrderItem i2 = new OrderItem(o1, p3, 0.00, 2, 80.00);
+		OrderItem i3 = new OrderItem(o2, p2, 100.00, 1, 800.00);
+
+		o1.getItems().addAll(Arrays.asList(i1, i2));
+		o2.getItems().addAll(Arrays.asList(i3));
+
+		p1.getItems().addAll(Arrays.asList(i1));
+		p2.getItems().addAll(Arrays.asList(i3));
+		p3.getItems().addAll(Arrays.asList(i2));
+
+		orderItemRepository.saveAll(Arrays.asList(i1, i2, i3));
 	}
 	
 	
