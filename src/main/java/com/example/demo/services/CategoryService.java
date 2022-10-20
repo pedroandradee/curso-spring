@@ -20,5 +20,10 @@ public class CategoryService {
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 			"Object cannot be found! Id: " + id + ", Type: " + Category.class.getName()));
 	}
+
+	public Category store(Category cat) {
+		cat.setId(null);
+		return repo.save(cat);
+	}
 	
 }
