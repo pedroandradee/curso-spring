@@ -1,5 +1,6 @@
 package com.example.demo.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,10 @@ public class CategoryService {
 		} catch(DataIntegrityViolationException e) {
 			throw new DataIntegrityException("This category has products, isn't possible to delete!");
 		}
+	}
+
+	public List<Category> list () {
+		return repo.findAll();
 	}
 	
 }

@@ -1,8 +1,8 @@
 package com.example.demo.resourses;
 
 import java.net.URI;
-// import java.util.ArrayList;
-// import java.util.List;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.example.demo.domain.Category;
+import com.example.demo.dto.CategoryDTO;
 import com.example.demo.services.CategoryService;
 
 @RestController
@@ -23,17 +24,18 @@ public class CategoriesResource {
 	@Autowired
 	private CategoryService service;
 	
-	/*@RequestMapping(method=RequestMethod.GET)
-	public List<Category> list() {
-		Category c1 = new Category(1, "Computing");
-		Category c2 = new Category(2, "Office");
-		
-		List<Category> list = new ArrayList<>();
-		list.add(c1);
-		list.add(c2);
-		
-		return list;
-	}*/
+	@RequestMapping(method=RequestMethod.GET)
+	public ResponseEntity<List<CategoryDTO>> list() {
+		List<Category> list = service.list();
+		List<CategoryDTO> listDto = list
+			.stream()
+			.map(cat -> new CategoryDTO(cat))
+				.collect(Collectors.toList()
+			);
+		return ResponseEntity
+			.ok()
+			.body(listDto);
+	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
 	public ResponseEntity<Category> find (@PathVariable Integer id) {
