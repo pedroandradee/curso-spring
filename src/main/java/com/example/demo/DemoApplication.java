@@ -63,6 +63,11 @@ public class DemoApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		Category c1 = new Category(null, "Computing");
 		Category c2 = new Category(null, "Office");
+		Category c3 = new Category(null, "Kitchen");
+		Category c4 = new Category(null, "Bathroom");
+		Category c5 = new Category(null, "Backyard");
+		Category c6 = new Category(null, "Living Room");
+		Category c7 = new Category(null, "Bedroom");
 		
 		Product p1 = new Product(null, "Computer", 2000.00);
 		Product p2 = new Product(null, "Printer", 800.00);
@@ -97,7 +102,7 @@ public class DemoApplication implements CommandLineRunner {
 		cl1.getAdresses().addAll(Arrays.asList(a1, a2));
 		
 
-		categoryRepository.saveAll(Arrays.asList(c1, c2));
+		categoryRepository.saveAll(Arrays.asList(c1, c2, c3, c4, c5, c6, c7));
 		productRepository.saveAll(Arrays.asList(p1, p2, p3));
 		stateRepository.saveAll(Arrays.asList(e1, e2));
 		cityRepository.saveAll(Arrays.asList(ci1, ci2, ci3));
