@@ -2,21 +2,42 @@ package com.example.demo.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
+
+import com.example.demo.services.validadation.ClientStore;
+
+@ClientStore
 public class ClientNewDTO implements Serializable{
     private static final long serialVersionUID = 1L;
-
-    private Integer id;
+    
+    @NotEmpty(message = "Preenchimento obrigatório!")
+    @Length(min=5, max=120, message = "O tamanho precisa ser entre 5 e 120 caracteres!")
     private String name;
+    
+    @NotEmpty(message = "Preenchimento obrigatório!")
+    @Email(message = "Email inválido!")
     private String email;
+
+    @NotEmpty(message = "Preenchimento obrigatório!")
     private String CPFOrCNPJ;
     private Integer clientType;
 
+    @NotEmpty(message = "Preenchimento obrigatório!")
     private String logradouro;
+
+    @NotEmpty(message = "Preenchimento obrigatório!")
     private String number;
+
     private String complement;
     private String district;
+
+    @NotEmpty(message = "Preenchimento obrigatório!")
     private String zipcode;
 
+    @NotEmpty(message = "Preenchimento obrigatório!")
     private String phoneNumber1;
     private String phoneNumber2;
     private String phoneNumber3;
@@ -24,14 +45,6 @@ public class ClientNewDTO implements Serializable{
     private Integer cityId;
 
     public ClientNewDTO() {}
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
