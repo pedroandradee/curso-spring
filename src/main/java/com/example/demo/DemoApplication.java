@@ -63,15 +63,23 @@ public class DemoApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		Category c1 = new Category(null, "Computing");
 		Category c2 = new Category(null, "Office");
-		Category c3 = new Category(null, "Kitchen");
-		Category c4 = new Category(null, "Bathroom");
-		Category c5 = new Category(null, "Backyard");
-		Category c6 = new Category(null, "Living Room");
-		Category c7 = new Category(null, "Bedroom");
+		Category c3 = new Category(null, "Bed Table and Bathroom");
+		Category c4 = new Category(null, "Eletronics");
+		Category c5 = new Category(null, "gardening");
+		Category c6 = new Category(null, "decoration");
+		Category c7 = new Category(null, "perfumary");
 		
 		Product p1 = new Product(null, "Computer", 2000.00);
 		Product p2 = new Product(null, "Printer", 800.00);
 		Product p3 = new Product(null, "Mouse", 80.00);
+		Product p4 = new Product(null, "Mesa de escritório", 300.00);
+		Product p5 = new Product(null, "toalha", 50.00);
+		Product p6 = new Product(null, "colcha", 200.00);
+		Product p7 = new Product(null, "TV true color", 1200.00);
+		Product p8 = new Product(null, "Roçadeira", 800.00);
+		Product p9 = new Product(null, "Abajour", 100.00);
+		Product p10 = new Product(null, "Pendente", 180.00);
+		Product p11 = new Product(null, "Shampoo", 90.00);
 
 		State e1 = new State(null, "mg");
 		State e2 = new State(null, "sp");
@@ -88,11 +96,24 @@ public class DemoApplication implements CommandLineRunner {
 		
 
 		c1.getProducts().addAll(Arrays.asList(p1, p2, p3));
-		c2.getProducts().addAll(Arrays.asList(p2));
+		c2.getProducts().addAll(Arrays.asList(p2, p4));
+		c3.getProducts().addAll(Arrays.asList(p5, p6));
+		c4.getProducts().addAll(Arrays.asList(p1, p2, p3,p7));
+		c5.getProducts().addAll(Arrays.asList(p8));
+		c6.getProducts().addAll(Arrays.asList(p9, p10));
+		c7.getProducts().addAll(Arrays.asList(p11));
 		
-		p1.getCategories().addAll(Arrays.asList(c1));
-		p2.getCategories().addAll(Arrays.asList(c1, c2));
-		p3.getCategories().addAll(Arrays.asList(c1));
+		p1.getCategories().addAll(Arrays.asList(c1, c4));
+		p2.getCategories().addAll(Arrays.asList(c1, c2, c4));
+		p3.getCategories().addAll(Arrays.asList(c1, c4));
+		p4.getCategories().addAll(Arrays.asList(c2));
+		p5.getCategories().addAll(Arrays.asList(c3));
+		p6.getCategories().addAll(Arrays.asList(c3));
+		p7.getCategories().addAll(Arrays.asList(c4));
+		p8.getCategories().addAll(Arrays.asList(c5));
+		p9.getCategories().addAll(Arrays.asList(c6));
+		p10.getCategories().addAll(Arrays.asList(c6));
+		p11.getCategories().addAll(Arrays.asList(c7));
 
 		e1.getCities().addAll(Arrays.asList(ci1));
 		e2.getCities().addAll(Arrays.asList(ci2, ci3));
@@ -103,7 +124,7 @@ public class DemoApplication implements CommandLineRunner {
 		
 
 		categoryRepository.saveAll(Arrays.asList(c1, c2, c3, c4, c5, c6, c7));
-		productRepository.saveAll(Arrays.asList(p1, p2, p3));
+		productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11));
 		stateRepository.saveAll(Arrays.asList(e1, e2));
 		cityRepository.saveAll(Arrays.asList(ci1, ci2, ci3));
 		clientRepository.saveAll(Arrays.asList(cl1));
