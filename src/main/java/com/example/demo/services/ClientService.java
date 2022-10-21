@@ -3,6 +3,8 @@ package com.example.demo.services;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -10,8 +12,13 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.domain.Address;
+import com.example.demo.domain.City;
 import com.example.demo.domain.Client;
 import com.example.demo.dto.ClientDTO;
+import com.example.demo.dto.ClientNewDTO;
+import com.example.demo.enums.ClientType;
+import com.example.demo.repositories.AddressRepository;
 import com.example.demo.repositories.ClientRepository;
 import com.example.demo.services.exceptions.DataIntegrityException;
 import com.example.demo.services.exceptions.ObjectNotFoundException;
@@ -21,6 +28,9 @@ public class ClientService {
 	
 	@Autowired
 	private ClientRepository repo;
+
+	@Autowired
+	private AddressRepository addressRepository;
 	
 	public Client find(Integer id) {
 		Optional<Client> obj = repo.findById(id);
@@ -28,8 +38,11 @@ public class ClientService {
 			"Object cannot be found! Id: " + id + ", Type: " + Client.class.getName()));
 	}
 
+	@Transactional
 	public Client store(Client obj) {
 		obj.setId(null);
+		obj = repo.save(obj);
+		addressRepository.saveAll(obj.getAdresses());
 		return repo.save(obj);
 	}
 
@@ -59,6 +72,36 @@ public class ClientService {
 
 	public Client fromDTO(ClientDTO cDTO) {
 		return new Client(cDTO.getId(), cDTO.getName(), cDTO.getEmail(), null, null);
+	}
+
+	public Client fromDTO(ClientNewDTO cDTO) {
+		Client cli = new Client(
+			null, 
+			cDTO.getName(), 
+			cDTO.getEmail(), 
+			cDTO.getCPFOrCNPJ(), 
+			ClientType.toEnum(cDTO.getClientType())
+		);
+		City cit = new City(cDTO.getCityId(), null, null);
+		Address ad = new Address(
+			null, 
+			cDTO.getLogradouro(),
+			cDTO.getNumber(),
+			cDTO.getComplement(),
+			cDTO.getDistrict(),
+			cDTO.getZipcode(),
+			cli,
+			cit
+		);
+		cli.getAdresses().add(ad);
+		cli.getContacts().add(cDTO.getPhoneNumber1());
+		if (cDTO.getPhoneNumber2() != null) {
+			cli.getContacts().add(cDTO.getPhoneNumber2());
+		}
+		if (cDTO.getPhoneNumber3() != null) {
+			cli.getContacts().add(cDTO.getPhoneNumber3());
+		}
+		return cli;
 	}
 
 	private void updateData(Client obj1, Client obj2) {

@@ -22,6 +22,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.example.demo.domain.Client;
 import com.example.demo.dto.ClientDTO;
+import com.example.demo.dto.ClientNewDTO;
 import com.example.demo.services.ClientService;
 
 @RestController
@@ -78,7 +79,7 @@ public class ClientResource {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> store(@Valid @RequestBody ClientDTO clDTO) {
+	public ResponseEntity<Void> store(@Valid @RequestBody ClientNewDTO clDTO) {
 		Client cat = service.fromDTO(clDTO);
 		cat = service.store(cat);
 		URI uri = ServletUriComponentsBuilder

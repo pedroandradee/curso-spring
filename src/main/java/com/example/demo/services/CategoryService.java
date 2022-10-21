@@ -65,6 +65,5 @@ public class CategoryService {
 	
 	private void updateData(Category obj1, Category obj2) {
 		obj1.setName(obj2.getName());
-		obj1.setEmail(obj2.getEmail());
 	}
 }
