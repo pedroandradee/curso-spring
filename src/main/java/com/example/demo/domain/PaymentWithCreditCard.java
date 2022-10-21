@@ -3,8 +3,10 @@ package com.example.demo.domain;
 import javax.persistence.Entity;
 
 import com.example.demo.enums.PaymentState;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 
 @Entity
+@JsonTypeName("paymentWithCreditCard")
 public class PaymentWithCreditCard extends Payment {
     private static final long serialVersionUID = 1L;
 
