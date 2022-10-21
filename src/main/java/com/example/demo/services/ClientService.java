@@ -57,7 +57,7 @@ public class ClientService {
 		try {
 			repo.deleteById(id);
 		} catch(DataIntegrityViolationException e) {
-			throw new DataIntegrityException("This client has entities associated!");
+			throw new DataIntegrityException("This client has orders associated!");
 		}
 	}
 
