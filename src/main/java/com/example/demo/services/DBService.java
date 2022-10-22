@@ -82,7 +82,7 @@ public class DBService {
 		City ci2 = new City(null, "são paulo", e2);
 		City ci3 = new City(null, "campinas", e2);
 		
-		Client cl1 = new Client(null, "maria", "maria@email.com", "123.123.123-12", ClientType.FISICPERSON);
+		Client cl1 = new Client(null, "maria", "pedro.h8000@hotmail.com", "123.123.123-12", ClientType.FISICPERSON);
 		
 		Address a1 = new Address(null, "rua 1", "123", "apt 123", "cidade 1", "12345-678", cl1, ci1);
 		Address a2 = new Address(null, "rua 2", "234", "apt 234", "cidade 2", "23456-789", cl1, ci2);
