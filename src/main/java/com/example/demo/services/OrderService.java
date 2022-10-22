@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.example.demo.domain.Order;
 import com.example.demo.domain.OrderItem;
 import com.example.demo.domain.PaymentWithTicket;
+import com.example.demo.domain.Product;
 import com.example.demo.enums.PaymentState;
 import com.example.demo.repositories.OrderItemRepository;
 import com.example.demo.repositories.OrderRepository;
@@ -58,10 +59,12 @@ public class OrderService {
 		paymentRepository.save(obj.getPayment());
 		for (OrderItem oi : obj.getItems()) {
 			oi.setDiscount(0.0);
-			oi.setPrice(productService.find(oi.getProduct().getId()).getPrice());
+			oi.setProduct(productService.find(oi.getProduct().getId()));
+			oi.setPrice(oi.getProduct().getPrice());
 			oi.setOrder(obj);
 		}
 		orderItemRepository.saveAll(obj.getItems());
+		System.out.println(obj);
 		return obj;
 	}
 	
