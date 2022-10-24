@@ -31,7 +31,7 @@ public class Order implements Serializable {
     private Integer id;
     
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
-    private Date order_date;
+    private Date instant;
 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "order")
     private Payment payment;
@@ -49,10 +49,10 @@ public class Order implements Serializable {
 
     public Order() {}
 
-    public Order(Integer id, Date order_date, Client client, Address address) {
+    public Order(Integer id, Date instant, Client client, Address address) {
         super();
         this.id = id;
-        this.order_date = order_date;
+        this.instant = instant;
         this.client = client;
         this.address = address;
     }
@@ -75,11 +75,11 @@ public class Order implements Serializable {
     }
 
     public Date getOrder_date() {
-        return order_date;
+        return instant;
     }
 
-    public void setOrder_date(Date order_date) {
-        this.order_date = order_date;
+    public void setOrder_date(Date instant) {
+        this.instant = instant;
     }
 
     public Payment getPayment() {
