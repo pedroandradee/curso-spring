@@ -19,13 +19,22 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import com.example.demo.security.JWTAuthenticationFilter;
+import com.example.demo.security.JWTUtil;
+
 
 @Configuration
 @EnableWebSecurity
 public class SecutiryConfig extends WebSecurityConfigurerAdapter {
     
     @Autowired
+    private UserDetailsService userDetailsService;
+
+    @Autowired
     private Environment env;
+
+    @Autowired
+    private JWTUtil jwtUtil;
 
     public static final String[] PUBLIC_MATCHERS = {
         "/h2-console/**"
@@ -33,7 +42,8 @@ public class SecutiryConfig extends WebSecurityConfigurerAdapter {
 
     public static final String[] PUBLIC_MATCHERS_GET = {
         "/products/**",
-        "/categories/**"
+        "/categories/**",
+        "/states/**"
     };
 
     @Override
@@ -49,7 +59,13 @@ public class SecutiryConfig extends WebSecurityConfigurerAdapter {
             .antMatchers(HttpMethod.GET, PUBLIC_MATCHERS_GET).permitAll()
             .anyRequest()
             .authenticated();
+        http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil));
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+    }
+
+    @Override
+    public void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
     }
 
     @Bean
