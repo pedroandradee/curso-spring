@@ -26,6 +26,7 @@ import com.example.demo.security.JWTUtil;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecutiryConfig extends WebSecurityConfigurerAdapter {
     
     @Autowired
@@ -47,6 +48,10 @@ public class SecutiryConfig extends WebSecurityConfigurerAdapter {
         "/states/**"
     };
 
+    public static final String[] PUBLIC_MATCHERS_POST = {
+        "/clients/**"
+    };
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         
@@ -56,6 +61,7 @@ public class SecutiryConfig extends WebSecurityConfigurerAdapter {
 
         http.cors().and().csrf().disable();
         http.authorizeRequests()
+            .antMatchers(HttpMethod.POST, PUBLIC_MATCHERS_POST).permitAll()
             .antMatchers(PUBLIC_MATCHERS).permitAll()
             .antMatchers(HttpMethod.GET, PUBLIC_MATCHERS_GET).permitAll()
             .anyRequest()
