@@ -4,6 +4,7 @@ package com.example.demo.services;
 
 import org.springframework.mail.SimpleMailMessage;
 
+import com.example.demo.domain.Client;
 import com.example.demo.domain.Order;
 
 public interface EmailService {
@@ -12,8 +13,6 @@ public interface EmailService {
 
     void sendMail(SimpleMailMessage msg);
 
-    // void sendOrderConfirmationHtmlEmail(Order obj);
-
-    // void sendHtmlEmail(MimeMessage msg);
+    void sendNewPassword(Client cl, String newPass);
     
 }
