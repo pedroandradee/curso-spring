@@ -10,6 +10,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.domain.Address;
@@ -32,6 +33,9 @@ public class ClientService {
 	@Autowired
 	private AddressRepository addressRepository;
 	
+	@Autowired
+	private BCryptPasswordEncoder bcrypt;
+
 	public Client find(Integer id) {
 		Optional<Client> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
@@ -71,7 +75,7 @@ public class ClientService {
 	}
 
 	public Client fromDTO(ClientDTO cDTO) {
-		return new Client(cDTO.getId(), cDTO.getName(), cDTO.getEmail(), null, null);
+		return new Client(cDTO.getId(), cDTO.getName(), cDTO.getEmail(), null, null, null);
 	}
 
 	public Client fromDTO(ClientNewDTO cDTO) {
@@ -79,6 +83,7 @@ public class ClientService {
 			null, 
 			cDTO.getName(), 
 			cDTO.getEmail(), 
+			bcrypt.encode(cDTO.getPassword()),
 			cDTO.getCPFOrCNPJ(), 
 			ClientType.toEnum(cDTO.getClientType())
 		);
