@@ -22,7 +22,7 @@ import com.example.demo.domain.State;
 
 import com.example.demo.enums.ClientType;
 import com.example.demo.enums.PaymentState;
-
+import com.example.demo.enums.UserType;
 import com.example.demo.repositories.AddressRepository;
 import com.example.demo.repositories.CategoryRepository;
 import com.example.demo.repositories.CityRepository;
@@ -85,10 +85,15 @@ public class DBService {
 		City ci2 = new City(null, "são paulo", e2);
 		City ci3 = new City(null, "campinas", e2);
 		
-		Client cl1 = new Client(null, "maria", "pedro.h8000@hotmail.com", bcrypt.encode("teste123"), "123.123.123-12", ClientType.FISICPERSON);
-		
+		Client cl1 = new Client(null, "maria", "pedro.h8000@hotmail.com", bcrypt.encode("teste123"), "970.262.480-06", ClientType.FISICPERSON);
+		Client cl2 = new Client(null, "pedro", "pedro.h8237@gmail.com", bcrypt.encode("teste123"), "495.387.570-25", ClientType.FISICPERSON);
+		cl2.getContacts().addAll(Arrays.asList("99876-9876", "98765-8765"));
+		cl2.setUserType(UserType.ADMIN);
+
+
 		Address a1 = new Address(null, "rua 1", "123", "apt 123", "cidade 1", "12345-678", cl1, ci1);
 		Address a2 = new Address(null, "rua 2", "234", "apt 234", "cidade 2", "23456-789", cl1, ci2);
+		Address a3 = new Address(null, "rua 3", "345", "apt 345", "cidade 3", "34567-890", cl2, ci2);
 
 		
 
@@ -118,14 +123,15 @@ public class DBService {
 		cl1.getContacts().addAll(Arrays.asList("11111-1111", "22222-2222"));
 
 		cl1.getAdresses().addAll(Arrays.asList(a1, a2));
+		cl2.getAdresses().addAll(Arrays.asList(a3));
 		
 
 		categoryRepository.saveAll(Arrays.asList(c1, c2, c3, c4, c5, c6, c7));
 		productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11));
 		stateRepository.saveAll(Arrays.asList(e1, e2));
 		cityRepository.saveAll(Arrays.asList(ci1, ci2, ci3));
-		clientRepository.saveAll(Arrays.asList(cl1));
-		addressRepository.saveAll(Arrays.asList(a1, a2));
+		clientRepository.saveAll(Arrays.asList(cl1, cl2));
+		addressRepository.saveAll(Arrays.asList(a1, a2, a3));
 
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         

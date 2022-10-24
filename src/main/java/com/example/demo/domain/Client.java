@@ -5,18 +5,21 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import com.example.demo.enums.ClientType;
+import com.example.demo.enums.UserType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -44,16 +47,23 @@ public class Client implements Serializable{
     @CollectionTable(name="CONTACTS")
     private Set<String> contacts = new HashSet<>();
 
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name="USERTYPE")
+    private Set<Integer> types = new HashSet<>();
+
     @JsonIgnore
     @OneToMany(mappedBy = "client")
     private List<Order> orderes = new ArrayList<>();
 
-    public Client() {}
-
+    public Client() {
+        setUserType(UserType.CLIENT);
+    }
+    
     public Client(Integer id, String name, String email, String password, String CPFOrCNPJ, ClientType clientType) {
         super();
         this.id = id;
         this.name = name;
+        setUserType(UserType.CLIENT);
         this.email = email;
         this.password = password;
         this.CPFOrCNPJ = CPFOrCNPJ;
@@ -114,6 +124,14 @@ public class Client implements Serializable{
 
     public void setContacts(Set<String> contacts) {
         this.contacts = contacts;
+    }
+
+    public Set<UserType> getUserTypes() {
+        return types.stream().map(x -> UserType.toEnum(x)).collect(Collectors.toSet());
+    }
+
+    public void setUserType(UserType ut) {
+        types.add(ut.getCod());
     }
 
     public List<Order> getOrderes() {
