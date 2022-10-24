@@ -19,8 +19,11 @@ import com.example.demo.domain.Client;
 import com.example.demo.dto.ClientDTO;
 import com.example.demo.dto.ClientNewDTO;
 import com.example.demo.enums.ClientType;
+import com.example.demo.enums.UserType;
 import com.example.demo.repositories.AddressRepository;
 import com.example.demo.repositories.ClientRepository;
+import com.example.demo.security.UserSS;
+import com.example.demo.services.exceptions.AuthorizationException;
 import com.example.demo.services.exceptions.DataIntegrityException;
 import com.example.demo.services.exceptions.ObjectNotFoundException;
 
@@ -37,6 +40,10 @@ public class ClientService {
 	private BCryptPasswordEncoder bcrypt;
 
 	public Client find(Integer id) {
+		UserSS user = UserService.authenticated();
+		if (user == null || !user.hasRole(UserType.ADMIN) && !id.equals(user.getId())) {
+			throw new AuthorizationException("Acesso não autorizado!");
+		}
 		Optional<Client> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 			"Object cannot be found! Id: " + id + ", Type: " + Client.class.getName()));

@@ -1,6 +1,6 @@
 package com.example.demo.services;
 
-import javax.mail.internet.MimeMessage;
+// import javax.mail.internet.MimeMessage;
 
 import org.springframework.mail.SimpleMailMessage;
 
@@ -12,8 +12,8 @@ public interface EmailService {
 
     void sendMail(SimpleMailMessage msg);
 
-    void sendOrderConfirmationHtmlEmail(Order obj);
+    // void sendOrderConfirmationHtmlEmail(Order obj);
 
-    void sendHtmlEmail(MimeMessage msg);
+    // void sendHtmlEmail(MimeMessage msg);
     
 }
