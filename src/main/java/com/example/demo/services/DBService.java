@@ -78,8 +78,8 @@ public class DBService {
 		Product p10 = new Product(null, "Pendente", 180.00);
 		Product p11 = new Product(null, "Shampoo", 90.00);
 
-		State e1 = new State(null, "mg");
-		State e2 = new State(null, "sp");
+		State e1 = new State(null, "Minas Gerais");
+		State e2 = new State(null, "São Paulo");
 
 		City ci1 = new City(null, "uberlandia", e1);
 		City ci2 = new City(null, "são paulo", e2);
