@@ -1,13 +1,10 @@
-package com.example.demo.resourses;
+package com.example.demo.resources;
 
 import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
-
-// import java.util.ArrayList;
-// import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,49 +18,26 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.example.demo.domain.Client;
-import com.example.demo.dto.ClientDTO;
-import com.example.demo.dto.ClientNewDTO;
-import com.example.demo.services.ClientService;
+import com.example.demo.domain.Category;
+import com.example.demo.dto.CategoryDTO;
+import com.example.demo.services.CategoryService;
+
+import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping(value="/clients")
-public class ClientResource {
+@RequestMapping(value="/categories")
+public class CategoriesResource {
 	
 	@Autowired
-	private ClientService service;
+	private CategoryService service;
 	
-	/*@RequestMapping(method=RequestMethod.GET)
-	public List<Client> list() {
-		Client c1 = new Client(1, "Computing");
-		Client c2 = new Client(2, "Office");
-		
-		List<Client> list = new ArrayList<>();
-		list.add(c1);
-		list.add(c2);
-		
-		return list;
-	}*/
-	
-	@RequestMapping(value="/{id}", method=RequestMethod.GET)
-	public ResponseEntity<Client> find (@PathVariable Integer id) {
-		Client obj = service.find(id);
-		return ResponseEntity.ok().body(obj);
-	}
-	
-	@RequestMapping(value="/email", method=RequestMethod.GET)
-	public ResponseEntity<Client> find (@RequestParam(value="value") String email) {
-		Client obj = service.findByEmail(email);
-		return ResponseEntity.ok().body(obj);
-	}
-
-	@PreAuthorize("hasAnyRole('ADMIN')")
+	@ApiOperation(value = "List categories")
 	@RequestMapping(method=RequestMethod.GET)
-	public ResponseEntity<List<ClientDTO>> list() {
-		List<Client> list = service.list();
-		List<ClientDTO> listDto = list
+	public ResponseEntity<List<CategoryDTO>> list() {
+		List<Category> list = service.list();
+		List<CategoryDTO> listDto = list
 			.stream()
-			.map(cat -> new ClientDTO(cat))
+			.map(cat -> new CategoryDTO(cat))
 				.collect(Collectors.toList()
 			);
 		return ResponseEntity
@@ -71,25 +45,34 @@ public class ClientResource {
 			.body(listDto);
 	}
 	
-	@PreAuthorize("hasAnyRole('ADMIN')")
+	@ApiOperation(value = "List categories with paginator")
 	@RequestMapping(value="/page", method=RequestMethod.GET)
-	public ResponseEntity<Page<ClientDTO>> listPage(
+	public ResponseEntity<Page<CategoryDTO>> listPage(
 		@RequestParam(value="page", defaultValue = "0") Integer page, 
 		@RequestParam(value="linesPerPage", defaultValue = "24")Integer linesPerPage, 
 		@RequestParam(value="orderBy", defaultValue = "name")String orderBy, 
 		@RequestParam(value="direction", defaultValue = "ASC")String direction
 	) {
-		Page<Client> list = service.listPage(page, linesPerPage, orderBy, direction);
-		Page<ClientDTO> listDto = list
-			.map(cat -> new ClientDTO(cat));
+		Page<Category> list = service.listPage(page, linesPerPage, orderBy, direction);
+		Page<CategoryDTO> listDto = list
+			.map(cat -> new CategoryDTO(cat));
 		return ResponseEntity
 			.ok()
 			.body(listDto);
 	}
+	
+	@ApiOperation(value = "Find by id")
+	@RequestMapping(value="/{id}", method=RequestMethod.GET)
+	public ResponseEntity<Category> find (@PathVariable Integer id) {
+		Category obj = service.find(id);
+		return ResponseEntity.ok().body(obj);
+	}
 
+	@ApiOperation(value = "Store category")
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> store(@Valid @RequestBody ClientNewDTO clDTO) {
-		Client cat = service.fromDTO(clDTO);
+	public ResponseEntity<Void> store(@Valid @RequestBody CategoryDTO catDTO) {
+		Category cat = service.fromDTO(catDTO);
 		cat = service.store(cat);
 		URI uri = ServletUriComponentsBuilder
 			.fromCurrentRequest()
@@ -99,9 +82,11 @@ public class ClientResource {
 		return ResponseEntity.created(uri).build();
 	}
 
+	@ApiOperation(value = "Update category")
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(value="/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Void> update(@Valid @RequestBody ClientDTO clDTO, @PathVariable Integer id) {
-		Client cat = service.fromDTO(clDTO);
+	public ResponseEntity<Void> update(@Valid @RequestBody CategoryDTO catDTO, @PathVariable Integer id) {
+		Category cat = service.fromDTO(catDTO);
 		cat.setId(id);
 		cat = service.update(cat);
 		return ResponseEntity

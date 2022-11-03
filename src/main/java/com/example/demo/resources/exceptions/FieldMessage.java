@@ -1,4 +1,4 @@
-package com.example.demo.resourses.exceptions;
+package com.example.demo.resources.exceptions;
 
 import java.io.Serializable;
 

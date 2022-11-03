@@ -1,4 +1,4 @@
-package com.example.demo.resourses.exceptions;
+package com.example.demo.resources.exceptions;
 
 import java.util.ArrayList;
 import java.util.List;

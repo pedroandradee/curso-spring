@@ -1,4 +1,4 @@
-package com.example.demo.resourses;
+package com.example.demo.resources;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.domain.Product;
 import com.example.demo.dto.ProductDTO;
-import com.example.demo.resourses.utils.URL;
+import com.example.demo.resources.utils.URL;
 import com.example.demo.services.ProductService;
 
 @RestController

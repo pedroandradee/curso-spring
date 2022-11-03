@@ -1,4 +1,4 @@
-package com.example.demo.resourses;
+package com.example.demo.resources;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;

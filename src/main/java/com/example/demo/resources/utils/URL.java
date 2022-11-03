@@ -1,4 +1,4 @@
-package com.example.demo.resourses.utils;
+package com.example.demo.resources.utils;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;

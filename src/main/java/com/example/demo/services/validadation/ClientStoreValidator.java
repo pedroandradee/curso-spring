@@ -12,7 +12,7 @@ import com.example.demo.domain.Client;
 import com.example.demo.dto.ClientNewDTO;
 import com.example.demo.enums.ClientType;
 import com.example.demo.repositories.ClientRepository;
-import com.example.demo.resourses.exceptions.FieldMessage;
+import com.example.demo.resources.exceptions.FieldMessage;
 import com.example.demo.services.validadation.utils.BR;
 
 public class ClientStoreValidator implements ConstraintValidator<ClientStore, ClientNewDTO> {

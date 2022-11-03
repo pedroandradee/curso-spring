@@ -1,4 +1,4 @@
-package com.example.demo.resourses;
+package com.example.demo.resources;
 
 import java.util.List;
 import java.util.stream.Collectors;

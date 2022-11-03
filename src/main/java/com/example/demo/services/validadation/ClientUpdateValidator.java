@@ -14,7 +14,7 @@ import org.springframework.web.servlet.HandlerMapping;
 import com.example.demo.domain.Client;
 import com.example.demo.dto.ClientDTO;
 import com.example.demo.repositories.ClientRepository;
-import com.example.demo.resourses.exceptions.FieldMessage;
+import com.example.demo.resources.exceptions.FieldMessage;
 
 public class ClientUpdateValidator implements ConstraintValidator<ClientUpdate, ClientDTO> {
     
